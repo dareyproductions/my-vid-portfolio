@@ -27,8 +27,14 @@ import dj_database_url  # Add this at the top if using Render PostgreSQL
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# Force HTTPS
+SECURE_SSL_REDIRECT = True
+
 ALLOWED_HOSTS = ['dareyproductions-video-portfolio.onrender.com']
 
+DATABASE_URL = os.environ.get("DATABASE_URL")
+if DATABASE_URL:
+    DATABASES['default'] = dj_database_url.parse(DATABASE_URL, conn_max_age=600)
 
 # Application definition
 
@@ -40,6 +46,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'core',
+    'cloudinary',
+    'cloudinary_storage',
+    'django.contrib.staticfiles',
 ]
 
 MIDDLEWARE = [
@@ -164,3 +173,16 @@ EMAIL_HOST_USER = 'daramolaponmilee@gmail.com'
 EMAIL_HOST_PASSWORD = 'unphxhoenyjvvobu'  # Use App Password, not your Gmail password
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
+import cloudinary
+import cloudinary_storage
+
+# Cloudinary config
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dxhx5majw',
+    'API_KEY': '734834496488757',
+    'API_SECRET': 'g1uEYa_JcYxuWtcfhxje1D71gdw',
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
