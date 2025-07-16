@@ -22,3 +22,11 @@ __pycache__/
 # IDEs
 .vscode/
 .idea/
+
+
+media/
+*.mp4
+*.webm
+*.avi
+*.mov
+*.ogg
