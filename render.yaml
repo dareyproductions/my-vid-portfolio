@@ -1,16 +1,24 @@
 # render.yaml
 services:
   - type: web
-    name: videoPortfolio-backend
+    name: video-portfolio
     env: python
-    buildCommand: "pip install -r requirements.txt && python manage.py collectstatic --noinput && python manage.py migrate"
+    buildCommand: "pip install -r requirements.txt"
     startCommand: "gunicorn videoPortfolio.wsgi:application"
     envVars:
-      - key: DJANGO_SETTINGS_MODULE
-        value: videoPortfolio.settings
+      - key: DEBUG
+        value: "False"
       - key: SECRET_KEY
         generateValue: true
       - key: EMAIL_HOST_USER
         value: daramolaponmilee@gmail.com
       - key: EMAIL_HOST_PASSWORD
         value: unphxhoenyjvvobu
+      - key: DATABASE_URL
+        fromDatabase:
+          name: video-db
+          property: connectionString
+databases:
+  - name: video-db
+    databaseName: video_portfolio
+    user: video_user
