@@ -1,29 +1,3 @@
-# Django
-*.pyc
-__pycache__/
-db.sqlite3
-/staticfiles
-/media
-.env
-
-# Python
-*.log
-*.pot
-*.pyc
-*.pyo
-*.pyd
-.Python
-env/
-venv/
-ENV/
-.venv/
-__pycache__/
-
-# IDEs
-.vscode/
-.idea/
-
-
 media/
 *.mp4
 *.webm
