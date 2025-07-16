@@ -1,0 +1,16 @@
+# render.yaml
+services:
+  - type: web
+    name: videoPortfolio-backend
+    env: python
+    buildCommand: "pip install -r requirements.txt && python manage.py collectstatic --noinput && python manage.py migrate"
+    startCommand: "gunicorn videoPortfolio.wsgi:application"
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: videoPortfolio.settings
+      - key: SECRET_KEY
+        generateValue: true
+      - key: EMAIL_HOST_USER
+        value: daramolaponmilee@gmail.com
+      - key: EMAIL_HOST_PASSWORD
+        value: unphxhoenyjvvobu

@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+{%load static%}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>John Darey - Video Editor Portfolio</title>
+    <meta name="description" content="Professional Video Editor and Motion Graphics Designer Portfolio">
+    <meta name="author" content="John Darey">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <!-- <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script> -->
+    <link rel="stylesheet" href="{% static 'style/style.css' %}">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav" id="navigation">
+        <div class="nav-container">
+            <div class="nav-content">
+                <!-- Logo -->
+                <div class="logo">
+                    <a href="#home"><div class="logo-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="5,3 19,12 5,21 5,3"></polygon>
+                        </svg>
+                    </div></a>
+                    <a href="#home"><span class="logo-text">Darey Productions</span></a>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <div class="nav-desktop">
+                    <button onclick="scrollToSection('#home')">Home</button>
+                    <button onclick="scrollToSection('#portfolio')">Portfolio</button>
+                    <button onclick="scrollToSection('#skills')">Skills</button>
+                    <button onclick="scrollToSection('#about')">About</button>
+                    <button onclick="scrollToSection('#contact')">Contact</button>
+                </div>
+
+                <!-- CTA Button -->
+                <div class="nav-desktop">
+                    <button class="btn-hero" onclick="scrollToSection('#contact')">
+                        Let's Work Together
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="menu-button" onclick="toggleMobileMenu()">
+                    <svg class="icon icon-lg menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                    <svg class="icon icon-lg close-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Navigation -->
+            <div class="nav-mobile" id="mobileNav">
+                <div class="nav-mobile-content">
+                    <button onclick="scrollToSection('#home')">Home</button>
+                    <button onclick="scrollToSection('#portfolio')">Portfolio</button>
+                    <button onclick="scrollToSection('#skills')">Skills</button>
+                    <button onclick="scrollToSection('#about')">About</button>
+                    <button onclick="scrollToSection('#contact')">Contact</button>
+                    <button class="btn-hero" onclick="scrollToSection('#contact')">
+                        Let's Work Together
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+
+
+    <section class="hero-section" id="home">
+        <!-- Background Pattern -->
+        <div class="background-pattern"></div>
+        
+        <div class="container">
+            <div class="content-wrapper">
+                <!-- Main Title -->
+                <h1 class="main-title">
+                    <span class="title-name">Ponmile</span>
+                    <span class="title-highlight">Daramola</span>
+                </h1>
+                
+                <!-- Subtitle -->
+                <div class="subtitle">
+                    <span class="subtitle-line">Video Editor</span>
+                </div>
+                
+                <!-- Description -->
+                <p class="description">
+                    Crafting compelling visual narratives through precision editing, dynamic motion graphics, 
+                    and immersive audio experiences. Every frame tells a story.
+                </p>
+                
+                <!-- Video Player Section -->
+                <div class="video-section">
+    <div class="video-container">
+        {% if has_video %}
+            <!-- Actual Video Player -->
+            <video 
+                id="heroVideo" 
+                class="hero-video" 
+                controls
+                preload="metadata"
+                {% if hero_video.thumbnail %}poster="{{ hero_video.thumbnail.url }}"{% endif %}
+                style="width: 100%; height: 100%; object-fit: cover; display: none;"
+            >
+                <source src="{{ hero_video.video_file.url }}" type="video/mp4">
+                <source src="{{ hero_video.video_file.url }}" type="video/webm">
+                <source src="{{ hero_video.video_file.url }}" type="video/ogg">
+                Your browser does not support the video tag.
+            </video>
+            
+            <!-- Video Overlay/Placeholder -->
+            <div class="video-placeholder" id="videoPlaceholder" 
+                 {% if hero_video.thumbnail %}style="background-image: url('{{ hero_video.thumbnail.url }}'); background-size: cover; background-position: center;"{% endif %}>
+                <div class="video-overlay"></div>
+                <div class="video-content">
+                    <button class="play-button" onclick="playVideo()">
+                        <svg class="play-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="5,3 19,12 5,21 5,3"></polygon>
+                        </svg>
+                    </button>
+                    <!-- <p style="color: white; margin-bottom: 0.25rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">{{ hero_video.title }}</p>
+                    <p style="color: white; opacity: 0.9; font-size: 0.875rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">
+                        {% if hero_video.description %}
+                            {{ hero_video.description }}
+                        {% else %}
+                            Click to watch showreel
+                        {% endif %}
+                    </p> -->
+                </div>
+            </div>
+        {% else %}
+            <!-- No Video Available -->
+            <div class="video-placeholder">
+                <div class="video-content">
+                    <button class="play-button" onclick="showComingSoon()">
+                        <svg class="play-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="5,3 19,12 5,21 5,3"></polygon>
+                        </svg>
+                    </button>
+                    <p style="color: hsl(var(--muted-foreground)); margin-bottom: 0.25rem;">Demo Reel Coming Soon</p>
+                    <p style="color: hsl(var(--muted-foreground)); opacity: 0.7; font-size: 0.875rem;">Click to watch showreel</p>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+                        
+                        <!-- Video overlay effects -->
+                        <div class="video-overlay"></div>
+                    </div>
+                    
+                    <!-- Video Controls -->
+                    <!-- <div class="button-group">
+                        <button class="btn btn-hero" onclick="playVideo()">
+                            <svg class="play-icon" style="width: 1.25rem; height: 1.25rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polygon points="5,3 19,12 5,21 5,3"></polygon>
+                            </svg>
+                            Watch Showreel
+                        </button>
+                        <a href="#portfolio" class="btn btn-glass">
+                            View Portfolio
+                        </a>
+                    </div> -->
+                </div>
+                
+                <!-- Scroll Indicator -->
+                <!-- <div class="scroll-indicator">
+                    <svg class="chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="6,9 12,15 18,9"></polyline>
+                    </svg>
+                </div> -->
+            </div>
+        </div>
+    </section>
+
+
+    <section class="portfolio-section" id="portfolio">
+        <div class="container">
+            <!-- Section Header -->
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span>Featured</span>
+                    <span class="gradient-text">Work</span>
+                </h2>
+                <p class="section-description">
+                    A curated selection of my best video editing and motion graphics projects
+                </p>
+            </div>
+
+            <!-- Filter Categories -->
+            <!-- <div class="filter-categories">
+                <button class="filter-btn active" data-filter="all">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect width="18" height="18" x="3" y="3" rx="2"/>
+                        <path d="M7 3v18"/>
+                        <path d="M3 7.5h4"/>
+                        <path d="M3 16.5h4"/>
+                    </svg>
+                    All Projects
+                </button>
+                <button class="filter-btn" data-filter="films">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect width="18" height="18" x="3" y="3" rx="2"/>
+                        <path d="M7 3v18"/>
+                        <path d="M3 7.5h4"/>
+                        <path d="M3 16.5h4"/>
+                    </svg>
+                    Short Films
+                </button>
+                <button class="filter-btn" data-filter="client">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M7 7h10v10"/>
+                        <path d="M7 17 17 7"/>
+                    </svg>
+                    Client Work
+                </button>
+                <button class="filter-btn" data-filter="motion">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="13.5" cy="6.5" r=".5"/>
+                        <circle cx="17.5" cy="10.5" r=".5"/>
+                        <circle cx="8.5" cy="7.5" r=".5"/>
+                        <circle cx="6.5" cy="12.5" r=".5"/>
+                        <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>
+                    </svg>
+                    Motion Graphics
+                </button>
+                <button class="filter-btn" data-filter="audio">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 18V5l12-2v13"/>
+                        <circle cx="6" cy="18" r="3"/>
+                        <circle cx="18" cy="16" r="3"/>
+                    </svg>
+                    Audio Sync
+                </button>
+            </div> -->
+
+            <!-- Projects Grid -->
+            <!-- Replace your static project cards with this Django template code -->
+
+<!-- Your existing HTML with improved debugging -->
+<div class="projects-grid">
+    {% for project in projects %}
+    <div class="project-card" data-project-id="{{ project.id }}">
+        <div class="project-thumbnail">
+            {% if project.thumbnail %}
+                <img src="{{ project.thumbnail.url }}" alt="{{ project.title }}" 
+                     style="width: 100%; height: 100%; object-fit: cover;">
+            {% else %}
+                <div class="thumbnail-content">
+                    <div class="play-button">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="5,3 19,12 5,21"/>
+                        </svg>
+                    </div>
+                    <p class="thumbnail-text">Video Preview</p>
+                </div>
+            {% endif %}
+            
+            <div class="duration-badge">{{ project.get_duration_display }}</div>
+            
+            <div class="hover-overlay">
+                {% if project.video_file and project.video_file.name %}
+                    <button class="watch-btn" 
+                            data-video-url="{{ project.video_file.url }}"
+                            data-project-title="{{ project.title|escapejs }}">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="5,3 19,12 5,21"/>
+                        </svg>
+                        Watch Now
+                    </button>
+                {% else %}
+                    <button class="watch-btn disabled" disabled>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="5,3 19,12 5,21"/>
+                        </svg>
+                        No Video ({{ project.video_file|default:"NULL" }})
+                    </button>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="project-info">
+            <h3 class="project-title">{{ project.title }}</h3>
+            <p class="project-description">{{ project.description }}</p>
+            <div class="project-tags">
+                {% for tag in project.get_tags_list %}
+                    <span class="tag">{{ tag }}</span>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="no-projects">
+        <p>No video projects available yet.</p>
+    </div>
+    {% endfor %}
+</div>
+
+            <!-- Call to Action -->
+            <div class="cta-section">
+                <a href="#" class="cta-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M7 7h10v10"/>
+                        <path d="M7 17 17 7"/>
+                    </svg>
+                    View Full Portfolio
+                </a>
+            </div>
+        </div>
+    </section>
+
+
+
+
+    <section class="skills-section" id="skills">
+        <div class="container">
+            <!-- Section Header -->
+            <div class="section-header">
+                <h2>
+                    <span>Tools &</span>
+                    <span class="gradient-text">Expertise</span>
+                </h2>
+                <p>Professional-grade tools and techniques for creating exceptional video content</p>
+            </div>
+
+            <!-- Adobe Tools -->
+            <div class="tools-grid">
+                {% for tool in tools %}
+                <div class="card tool-card">
+                    <div class="card-content">
+                        <div class="icon-container">
+                            {{ tool.icon_svg|safe }}
+                        </div>
+                        <h3>{{ tool.name }}</h3>
+                        <div class="badge">{{ tool.badge }}</div>
+                        <p class="tool-description">{{ tool.description }}</p>
+                        <div class="proficiency-bar">
+                            <div class="proficiency-fill" data-proficiency="{{ tool.proficiency }}"></div>
+                        </div>
+                        <span class="proficiency-text">{{ tool.proficiency }}% Proficiency</span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Skills Categories -->
+            <div class="skills-grid">
+                {% for category in skill_categories %}
+                <div class="card skill-card">
+                    <div class="card-content">
+                        <div class="skill-header">
+                            <div class="skill-icon-container">
+                                {{ category.icon_svg|safe }}
+                            </div>
+                            <h3>{{ category.title }}</h3>
+                        </div>
+                        <ul class="skill-list">
+                            {% for skill in category.skills.all %}
+                            <li class="skill-item">
+                                <div class="skill-bullet"></div>
+                                <span class="skill-text">{{ skill.name }}</span>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Achievement Badge -->
+            <div class="achievement-section">
+                {% for badge in highlights %}
+                <div class="achievement-card">
+                    <div class="achievement-header">
+                        {{ badge.icon_svg|safe }}
+                        <h3 class="achievement-title">{{ badge.title }}</h3>
+                    </div>
+                    <p class="achievement-description">{{ badge.description }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+
+
+
+    <section class="about-section" id="about">
+        <div class="container">
+            <div class="about-grid">
+                <!-- Left Side - Photo and Stats -->
+                <div class="left-content">
+                    <!-- Profile Photo -->
+                    <div class="profile-container">
+                        <div class="profile-photo">
+                            <div class="profile-placeholder">
+                                <div>
+                                    <img src="{{ about.profile_photo.url }}" alt="Profile Photo">
+                                    <!-- <p class="profile-text">Professional Photo</p> -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Floating Element -->
+                        <div class="floating-element">
+                            <svg class="floating-icon icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="5"/>
+                                <path d="M12 1v6m0 6v6"/>
+                                <path d="M21 12h-6m-6 0H3"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Stats Grid -->
+                    <div class="stats-grid">
+                        <div class="stats-card">
+                            <svg class="stat-icon icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <polyline points="12,6 12,12 16,14"/>
+                            </svg>
+                            <div class="stat-value">{{ about.years_experience }}</div>
+                            <div class="stat-label">Years Experience</div>
+                        </div>
+                        
+                        <div class="stats-card">
+                            <svg class="stat-icon icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/>
+                            </svg>
+                            <div class="stat-value">{{ about.projects_completed }}</div>
+                            <div class="stat-label">Projects Completed</div>
+                        </div>
+                        
+                        <div class="stats-card">
+                            <svg class="stat-icon icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                                <circle cx="9" cy="7" r="4"/>
+                                <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                            </svg>
+                            <div class="stat-value">{{ about.happy_clients }}</div>
+                            <div class="stat-label">Happy Clients</div>
+                        </div>
+                        
+                        <div class="stats-card">
+                            <svg class="stat-icon icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 8h1a4 4 0 0 1 0 8h-1"/>
+                                <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/>
+                                <line x1="6" y1="1" x2="6" y2="4"/>
+                                <line x1="10" y1="1" x2="10" y2="4"/>
+                                <line x1="14" y1="1" x2="14" y2="4"/>
+                            </svg>
+                            <div class="stat-value">{{ about.coffee_consumed }}</div>
+                            <div class="stat-label">Coffee Consumed</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Side - About Content -->
+                <div class="right-content">
+                    <div>
+                        <h2 class="about-title">
+                            <span>About</span>
+                            <span class="name">Me</span>
+                        </h2>
+                        
+                        <div class="about-text">
+                            <p>
+                                {{ about.about_text_1 }}
+                            </p>
+                            
+                            <p>
+                                {{ about.about_text_2 }}
+                            </p>
+                            
+                            <p>
+                                {{ about.about_text_3 }}
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Expertise Areas -->
+                    <div class="expertise-section">
+                        <h3 class="expertise-title">Areas of Expertise</h3>
+                        <div class="expertise-grid">
+                            {% for skill in about.expertise.all %}
+                            <div class="expertise-item">
+                                <div class="expertise-dot"></div>
+                                <span class="expertise-text">{{ skill.name }}</span>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- CTA Buttons -->
+                    <div class="cta-buttons">
+                        <a href="{{ about.cv_file.url }}"><button class="btn btn-hero">
+                            <svg class="btn-icon icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                <polyline points="7,10 12,15 17,10"/>
+                                <line x1="12" y1="15" x2="12" y2="3"/>
+                            </svg>
+                            Download CV
+                        </button></a>
+                        <a href="#"><button class="btn btn-glass">
+                            <svg class="btn-icon icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 8h1a4 4 0 0 1 0 8h-1"/>
+                                <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/>
+                                <line x1="6" y1="1" x2="6" y2="4"/>
+                                <line x1="10" y1="1" x2="10" y2="4"/>
+                                <line x1="14" y1="1" x2="14" y2="4"/>
+                            </svg>
+                            Let's Chat
+                        </button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+    <section class="contact-section" id="contact">
+        <div class="container">
+            <!-- Section Header -->
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span>Let's</span>
+                    <span class="primary-text">Collaborate</span>
+                </h2>
+                <p class="section-description">
+                    Ready to bring your vision to life? Let's discuss your next video project
+                </p>
+            </div>
+
+            <div class="contact-grid">
+                <!-- Contact Form -->
+                <div>
+                    <div class="contact-card">
+                        <div class="card-header">
+                            <h3 class="card-title">Send a Message</h3>
+                        </div>
+                        <div class="card-content">
+                            <form class="form" id="contactForm" action="/contact/send/" method="POST">
+                                {% csrf_token %}
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label class="form-label" for="name">Name</label>
+                                        <input
+                                            class="form-input"
+                                            type="text"
+                                            id="name"
+                                            name="name"
+                                            placeholder="Your name"
+                                            required
+                                        />
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label" for="email">Email</label>
+                                        <input
+                                            class="form-input"
+                                            type="email"
+                                            id="email"
+                                            name="email"
+                                            placeholder="your.email@example.com"
+                                            required
+                                        />
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label" for="subject">Subject</label>
+                                    <input
+                                        class="form-input"
+                                        type="text"
+                                        id="subject"
+                                        name="subject"
+                                        placeholder="What's this about?"
+                                        required
+                                    />
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label" for="message">Message</label>
+                                    <textarea
+                                        class="form-textarea"
+                                        id="message"
+                                        name="message"
+                                        rows="6"
+                                        placeholder="Tell me about your project..."
+                                        required
+                                    ></textarea>
+                                </div>
+                                
+                                <button type="submit" class="btn btn-lg btn-full">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                                        <polygon points="22,2 15,22 11,13 2,9"></polygon>
+                                    </svg>
+                                    Send Message
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Info & Social -->
+                <div class="contact-info">
+                    <!-- Contact Information -->
+                    <div class="contact-card">
+                        <div class="card-header">
+                            <h3 class="card-title">Get in Touch</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                        <polyline points="22,6 12,13 2,6"></polyline>
+                                    </svg>
+                                </div>
+                                <div class="contact-details">
+                                    <p class="contact-label">Email</p>
+                                    <a href="mailto:dareyproductions@gmail.com" class="contact-value">dareyproductions@gmail.com</a>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                                    </svg>
+                                </div>
+                                <div class="contact-details">
+                                    <p class="contact-label">Phone</p>
+                                    <a href="tel:+2348069904701" class="contact-value">+234 8069904701</a>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                        <circle cx="12" cy="10" r="3"></circle>
+                                    </svg>
+                                </div>
+                                <div class="contact-details">
+                                    <p class="contact-label">Location</p>
+                                    <span class="contact-value">Osogbo, Osun</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Social Links -->
+                    <div class="contact-card">
+                        <div class="card-header">
+                            <h3 class="card-title">Follow My Work</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="social-grid">
+                                <a href="https://youtube.com/johndarey" target="_blank" class="social-link youtube">
+                                    <svg class="social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
+                                        <polygon points="9.75,15.02 15.5,11.75 9.75,8.48"></polygon>
+                                    </svg>
+                                    <span class="social-label">YouTube</span>
+                                </a>
+                                
+                                <a href="https://instagram.com/johndarey" target="_blank" class="social-link instagram">
+                                    <svg class="social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                                    </svg>
+                                    <span class="social-label">Instagram</span>
+                                </a>
+                                
+                                <a href="https://linkedin.com/in/johndarey" target="_blank" class="social-link linkedin">
+                                    <svg class="social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                                        <rect x="2" y="9" width="4" height="12"></rect>
+                                        <circle cx="4" cy="4" r="2"></circle>
+                                    </svg>
+                                    <span class="social-label">LinkedIn</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Availability Status -->
+                    <div class="contact-card availability-card">
+                        <div class="card-content">
+                            <div class="availability-indicator"></div>
+                            <h3 class="availability-title">Available for Projects</h3>
+                            <p class="availability-text">
+                                Currently accepting new video editing and motion graphics projects
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <div class="toast-title">Message Sent!</div>
+        <div class="toast-description">Thank you for your message. I'll get back to you soon.</div>
+    </div>
+
+    
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="copyright">© 2025 Darey Productions.</div>
+                <div class="tagline">Crafting visual stories through video editing and motion graphics.</div>
+            </div>
+        </div>
+    </footer>
+
+
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>
