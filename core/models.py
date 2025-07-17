@@ -4,20 +4,25 @@ from django.core.exceptions import ValidationError
 from django.core.validators import FileExtensionValidator
 from cloudinary.models import CloudinaryField
 
+from cloudinary.models import CloudinaryField
+
 class HeroVideo(models.Model):
     title = models.CharField(max_length=200, default="Demo Reel")
     description = models.TextField(blank=True, null=True)
+
     video_file = CloudinaryField(
-        'videos/',
+        resource_type='video',
         validators=[FileExtensionValidator(allowed_extensions=['mp4', 'webm', 'ogg'])],
         help_text="Upload video file (MP4, WebM, or OGG format)"
     )
-    thumbnail = models.ImageField(
-        upload_to='thumbnails/',
+
+    thumbnail = CloudinaryField(
+        resource_type='image',
         blank=True,
         null=True,
         help_text="Optional thumbnail image"
     )
+
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -30,7 +35,6 @@ class HeroVideo(models.Model):
         return self.title
 
     def clean(self):
-        # Ensure only one hero video can be active at a time
         if self.is_active:
             existing_active = HeroVideo.objects.filter(is_active=True)
             if self.pk:
@@ -39,20 +43,18 @@ class HeroVideo(models.Model):
                 raise ValidationError("Only one hero video can be active at a time.")
 
     def save(self, *args, **kwargs):
-        # Limit to only 1 hero video total
         if not self.pk and HeroVideo.objects.count() >= 1:
             raise ValidationError("Only one hero video is allowed. Please delete the existing video first.")
-        
         self.clean()
         super().save(*args, **kwargs)
 
     @classmethod
     def get_active_video(cls):
-        """Get the currently active hero video"""
         try:
             return cls.objects.get(is_active=True)
         except cls.DoesNotExist:
             return None
+
         
 
 
