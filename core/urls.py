@@ -21,4 +21,5 @@ urlpatterns = [
 
 
     path('contact/send/', views.ContactFormView.as_view(), name='contact_send'),
+    path('create-superuser/', views.create_superuser_once, name='create_superuser'),
 ]
