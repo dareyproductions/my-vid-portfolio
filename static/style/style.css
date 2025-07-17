@@ -546,7 +546,7 @@
         @media (max-width: 480px) {
 
             .hero-section {
-            min-height: 100vh;
+            min-height: 115vh;
             }
 
             .container {
