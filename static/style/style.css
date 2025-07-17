@@ -544,6 +544,11 @@
         }
 
         @media (max-width: 480px) {
+
+            .hero-section {
+            min-height: 100vh;
+            }
+
             .container {
                 padding: 0 1rem;
             }

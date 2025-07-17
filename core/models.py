@@ -3,7 +3,7 @@ from django.db import models
 from django.core.exceptions import ValidationError
 from django.core.validators import FileExtensionValidator
 from cloudinary.models import CloudinaryField
-
+from cloudinary.utils import cloudinary_url
 from cloudinary.models import CloudinaryField
 
 class HeroVideo(models.Model):
@@ -118,11 +118,16 @@ class VideoProject(models.Model):
         seconds = self.duration % 60
         return f"{minutes}:{seconds:02d}"
     
+
     def get_video_url(self):
-        """Get the video file URL"""
         if self.video_file:
-            return self.video_file.url
+            url, options = cloudinary_url(
+                self.video_file.name,
+                resource_type="video"
+            )
+            return url
         return None
+
     
     def get_thumbnail_url(self):
         """Get the thumbnail URL"""
