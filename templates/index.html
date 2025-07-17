@@ -272,23 +272,24 @@
             <div class="duration-badge">{{ project.get_duration_display }}</div>
             
             <div class="hover-overlay">
-                {% if project.video_file and project.video_file.name %}
-                    <button class="watch-btn" 
-                            data-video-url="{{ project.get_video_url }}"
-                            data-project-title="{{ project.title|escapejs }}">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polygon points="5,3 19,12 5,21"/>
-                        </svg>
-                        Watch Now
-                    </button>
-                {% else %}
-                    <button class="watch-btn disabled" disabled>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polygon points="5,3 19,12 5,21"/>
-                        </svg>
-                        No Video ({{ project.get_video_url|default:"NULL" }})
-                    </button>
-                {% endif %}
+                {% if project.get_video_url %}
+    <button class="watch-btn" 
+            data-video-url="{{ project.get_video_url }}"
+            data-project-title="{{ project.title|escapejs }}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="5,3 19,12 5,21"/>
+        </svg>
+        Watch Now
+    </button>
+{% else %}
+    <button class="watch-btn disabled" disabled>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="5,3 19,12 5,21"/>
+        </svg>
+        No Video
+    </button>
+{% endif %}
+
             </div>
         </div>
         
@@ -311,7 +312,7 @@
 
             <!-- Call to Action -->
             <div class="cta-section">
-                <a href="https://drive.google.com/drive/folders/1gBGP6R8nZAWgI4X7id-U9yKQnY1BOvA-?usp=sharing" target="_blank" rel="noopener noreferrer"" class="cta-btn">
+                <a href="https://drive.google.com/drive/folders/1gBGP6R8nZAWgI4X7id-U9yKQnY1BOvA-?usp=sharing" target="_blank" rel="noopener noreferrer" class="cta-btn">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M7 7h10v10"/>
                         <path d="M7 17 17 7"/>

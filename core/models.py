@@ -120,10 +120,12 @@ class VideoProject(models.Model):
     
 
     def get_video_url(self):
+        """Returns a Cloudinary URL to the uploaded video"""
         if self.video_file:
-            url, options = cloudinary_url(
-                self.video_file.name,
-                resource_type="video"
+            url, _ = cloudinary_url(
+                self.video_file,  # pass the CloudinaryResource directly
+                resource_type="video",
+                format="mp4"  # force .mp4 format (optional)
             )
             return url
         return None

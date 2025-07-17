@@ -87,15 +87,15 @@ WSGI_APPLICATION = 'videoPortfolio.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(default=os.environ.get("DATABASE_URL"))
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql',
-    #     'NAME': 'videoportfolio_db',
-    #     'USER': 'postgres',
-    #     'PASSWORD': 'darexpon',
-    #     'HOST': 'localhost',
-    #     'PORT': '5432',
-    # }
+    # 'default': dj_database_url.config(default=os.environ.get("DATABASE_URL"))
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'videoportfolio_db',
+        'USER': 'postgres',
+        'PASSWORD': 'darexpon',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
 }
 
 
