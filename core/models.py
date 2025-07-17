@@ -2,12 +2,13 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.core.validators import FileExtensionValidator
+from cloudinary.models import CloudinaryField
 
 class HeroVideo(models.Model):
     title = models.CharField(max_length=200, default="Demo Reel")
     description = models.TextField(blank=True, null=True)
-    video_file = models.FileField(
-        upload_to='videos/',
+    video_file = CloudinaryField(
+        'videos/',
         validators=[FileExtensionValidator(allowed_extensions=['mp4', 'webm', 'ogg'])],
         help_text="Upload video file (MP4, WebM, or OGG format)"
     )
