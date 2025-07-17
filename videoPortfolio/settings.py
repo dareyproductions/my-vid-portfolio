@@ -176,9 +176,16 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 
 import cloudinary
-import cloudinary_storage
+import cloudinary.uploader
+import cloudinary.api
 
-# Cloudinary config
+cloudinary.config(
+    cloud_name="dxhx5majw",
+    api_key="734834496488757",
+    api_secret="g1uEYa_JcYxuWtcfhxje1D71gdw",
+    secure=True
+)
+
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'dxhx5majw',
     'API_KEY': '734834496488757',
@@ -186,3 +193,4 @@ CLOUDINARY_STORAGE = {
 }
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
