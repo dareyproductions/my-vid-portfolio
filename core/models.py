@@ -67,68 +67,59 @@ import os
 class VideoProject(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
-    
-    # Video file
-    video_file = models.FileField(
-        upload_to='videos/',
-        validators=[FileExtensionValidator(allowed_extensions=['mp4', 'mov', 'avi', 'mkv'])],
+
+    # Cloudinary video upload
+    video_file = CloudinaryField(
+        'video',
+        resource_type='video',
+        folder='video_projects/videos',
         help_text="Upload video file (mp4, mov, avi, mkv)"
     )
-    
-    # Thumbnail image (optional - can be auto-generated)
-    thumbnail = models.ImageField(
-        upload_to='thumbnails/',
+
+    # Cloudinary image thumbnail
+    thumbnail = CloudinaryField(
+        'image',
+        folder='video_projects/thumbnails',
         blank=True,
         null=True,
         help_text="Upload thumbnail image (optional)"
     )
-    
-    # Duration in seconds
+
     duration = models.PositiveIntegerField(
         help_text="Duration in seconds"
     )
-    
-    # Tags for the project
+
     tags = models.CharField(
         max_length=500,
         help_text="Comma-separated tags (e.g., 'Premiere Pro, After Effects, Color Grading')"
     )
-    
-    # Additional fields
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     is_featured = models.BooleanField(default=False)
     order = models.PositiveIntegerField(default=0, help_text="Order for display")
-    
+
     class Meta:
         ordering = ['order', '-created_at']
         verbose_name = "Video Project"
         verbose_name_plural = "Video Projects"
-    
+
     def __str__(self):
         return self.title
-    
+
     def get_tags_list(self):
-        """Return tags as a list"""
         return [tag.strip() for tag in self.tags.split(',') if tag.strip()]
-    
+
     def get_duration_display(self):
-        """Convert duration in seconds to MM:SS format"""
         minutes = self.duration // 60
         seconds = self.duration % 60
         return f"{minutes}:{seconds:02d}"
-    
+
     def get_video_url(self):
-        """Get the video file URL"""
-        if self.video_file:
-            return self.video_file.url
-        return None
-    
+        return self.video_file.url if self.video_file else None
+
     def get_thumbnail_url(self):
-        """Get the thumbnail URL"""
-        if self.thumbnail:
-            return self.thumbnail.url
-        return None
+        return self.thumbnail.url if self.thumbnail else None
     
 
 class Tool(models.Model):
