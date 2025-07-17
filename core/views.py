@@ -210,7 +210,7 @@ def create_superuser_once(request):
         return HttpResponse("Superuser already exists.")
 
     User.objects.create_superuser(
-        email="dareyproductions.com",
+        email="dareyproductions@gmail.com",
         password="Dareyproductions7#",
         first_name="Darey",
         last_name="Productions"
