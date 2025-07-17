@@ -201,3 +201,18 @@ class ContactFormView(View):
             return JsonResponse({'success': False, 'error': str(e)}, status=500)
 
 
+from django.contrib.auth import get_user_model
+from django.http import HttpResponse
+
+def create_superuser_once(request):
+    User = get_user_model()
+    if User.objects.filter(email="admin@example.com").exists():
+        return HttpResponse("Superuser already exists.")
+
+    User.objects.create_superuser(
+        email="dareyproductions.com",
+        password="Dareyproductions7#",
+        first_name="Darey",
+        last_name="Productions"
+    )
+    return HttpResponse("Superuser created successfully.")
