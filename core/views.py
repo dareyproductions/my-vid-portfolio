@@ -211,6 +211,7 @@ def create_superuser_once(request):
 
     User.objects.create_superuser(
         email="dareyproductions@gmail.com",
+        username="dareyproductions",
         password="Dareyproductions7#",
         first_name="Darey",
         last_name="Productions"
