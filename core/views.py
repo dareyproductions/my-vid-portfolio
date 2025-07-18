@@ -147,13 +147,13 @@ def admin_hero_video(request):
 
 
 
-def project_detail(request, project_id):
-    """Individual project detail view"""
-    project = get_object_or_404(VideoProject, id=project_id)
-    context = {
-        'project': project,
-    }
-    return render(request, 'project_detail.html', context)
+# def project_detail(request, project_id):
+#     """Individual project detail view"""
+#     project = get_object_or_404(VideoProject, id=project_id)
+#     context = {
+#         'project': project,
+#     }
+#     return render(request, 'project_detail.html', context)
 
 def get_video_url(request, project_id):
     """API endpoint to get video URL for streaming"""

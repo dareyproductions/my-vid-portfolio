@@ -16,7 +16,7 @@ urlpatterns = [
     path('api/delete-hero-video/', views.delete_hero_video, name='delete_hero_video'),
 
     # Viseo portfolio endpoints
-    path('project/<int:project_id>/', views.project_detail, name='project_detail'),
+    # path('project/<int:project_id>/', views.project_detail, name='project_detail'),
     path('api/video/<int:project_id>/', views.get_video_url, name='get_video_url'),
 
 
