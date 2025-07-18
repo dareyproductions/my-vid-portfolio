@@ -954,7 +954,7 @@
             background: hsl(217, 91%, 60%, 0.3);
         }
 
-        .icon {
+        .icon_svg {
             width: 32px;
             height: 32px;
             color: hsl(217, 91%, 60%);
