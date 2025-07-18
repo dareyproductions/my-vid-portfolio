@@ -1751,7 +1751,7 @@
         .toast {
             position: fixed;
             top: 20px;
-            right: 20px;
+            right: 0px;
             background: hsl(220, 13%, 10%);
             border: 1px solid hsl(217, 91%, 60%);
             border-radius: 8px;
