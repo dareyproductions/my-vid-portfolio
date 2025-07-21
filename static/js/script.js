@@ -243,7 +243,7 @@ function openVideoModal(videoUrl, title) {
                     <button class="close-btn" id="closeModalBtn">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <video controls width="100%" height="300" preload="metadata">
+                    <video controls width="100%" height="100%" preload="metadata">
                         <source src="${videoUrl}" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
