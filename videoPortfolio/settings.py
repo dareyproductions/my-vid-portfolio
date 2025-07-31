@@ -30,7 +30,7 @@ DEBUG = True
 # Force HTTPS
 SECURE_SSL_REDIRECT = True
 
-ALLOWED_HOSTS = ['dareyproductions-video-portfolio.onrender.com']
+ALLOWED_HOSTS = ['*']
 
 # DATABASE_URL = os.environ.get("DATABASE_URL")
 # if DATABASE_URL:
